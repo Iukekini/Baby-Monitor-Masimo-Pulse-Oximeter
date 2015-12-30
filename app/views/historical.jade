@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  p.lead Graphs
+  hr
+  .row
+    col-sm-12
+      #MAINGRAPH(style='min-width: 310px; height: 400px; margin: 0 auto')
+
+block scripts
+    script(src='https://code.highcharts.com/stock/highstock.js')
+    script(src='/js/theme.js')
+    script(src='/js/historical.js')

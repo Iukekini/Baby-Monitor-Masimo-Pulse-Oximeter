@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  p.lead Vital Stats for Kaleo
+  hr
+  .row
+    .col-sm-12.col-md-6.col-lg-3
+      .well.infobox
+        h1 BPM
+        #BPM 150
+         
+            
+    .col-sm-12.col-md-6.col-lg-3
+      .well.infobox
+        h1 O2 Level
+        #SP02 99%
+    .col-sm-12.col-md-6.col-lg-3
+      .well.infobox
+        h1 PI
+        #PI .1%
+    .col-sm-12.col-md-6.col-lg-3
+      #messagediv.alert.alert-warning.infobox
+        h1#message No Connection
+        
+  p.lead Graphs
+  hr
+  .row
+    col-sm-12
+      #MAINGRAPH(style='min-width: 310px; height: 400px; margin: 0 auto')
+  hr
+  .row
+    .col-sm-12.col-md-6.col-lg-6
+      #HRGRAPH(style='min-width: 310px; height: 400px; margin: 0 auto')
+    .col-sm-12.col-md-6.col-lg-6
+      #SP02GRAPH(style='min-width: 310px; height: 400px; margin: 0 auto')
+
+block scripts
+    script(src='/js/lib/highcharts.js')
+    script(src='/js/lib/highcharts.more.js')
+    script(src='/js/lib/highcharts.module.solidgauge.js')
+    script(src='/js/lib/highcharts.exporting.js')
+    script(src='/js/theme.js')
+    script(src='/js/main.js')
+

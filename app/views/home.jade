@@ -1,0 +1,20 @@
+extends layout
+
+
+block content
+  h1 Kaleo Rocks
+  p.lead Heart rate and oxygen status for Kaleo
+  hr 
+  .row
+    .col-sm-6
+      h2 Live Status Graph
+      p Heart rate and oxygen status from the RAD8. Updated every 1 sec when Kaleo is sleeping at night. Not active during the day while he is out and about. 
+      p
+        a.btn.btn-primary(href='/status', role='button') Open Live Graph »
+  .row
+    .col-sm-6
+      h2 Historical Data
+      p Historical heart rate and oxygen readings from the RAD8. 
+      p
+        a.btn.btn-primary(href='/historical', role='button') Open History Graph »
+        
