@@ -3,13 +3,12 @@
   "version": "3.1.0",
   "scripts": {
     "start": "node app.js",
-    "test": "mocha --reporter spec --timeout 5000"
+    "test": "mocha --reporter spec --timeout 10000"
   },
   "dependencies": {
     "async": "^1.5.0",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.14.1",
-    "cheerio": "^0.19.0",
     "clockwork": "^0.1.0",
     "compression": "^1.6.0",
     "connect-assets": "^5.0.1",
@@ -38,6 +37,7 @@
   },
   "devDependencies": {
     "blessed": "^0.1.81",
+    "cheerio": "^0.19.0",
     "chai": "^3.4.1",
     "mocha": "^2.3.4",
     "multiline": "^1.0.2",
