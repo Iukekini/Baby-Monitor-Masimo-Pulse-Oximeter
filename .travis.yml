@@ -5,3 +5,4 @@ node_js:
 before_install:
   - :cd ./app/
   - :cp ./config/secrets.sample.js secrets.js
+  - :ls ./config/*
