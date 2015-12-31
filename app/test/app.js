@@ -91,6 +91,8 @@ describe('Get Historical Page', function () {
 
 });
 
+
+
 describe('Get Historical Data', function () {
 
 
@@ -110,6 +112,44 @@ describe('Get Historical Data', function () {
 
     it('should delete a login test user', deleteUser());
 
+});
+
+
+describe('Get Account Page', function () {
+
+
+    it('create user for login', createUser());
+    it('Log user into site', loginUser());
+
+
+    it('Get Status Page', function (done) {
+        server
+            .get('/account')
+            .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done()
+            });
+    });
+
+    it('should delete a login test user', deleteUser());
+
+});
+
+describe('GET /forgot', function () {
+    it('should return 200 OK', function (done) {
+        request(app)
+            .get('/forgot')
+            .expect(200, done);
+    });
+});
+
+describe('GET /signup', function () {
+    it('should return 200 OK', function (done) {
+        request(app)
+            .get('/signup')
+            .expect(200, done);
+    });
 });
 
 function createUser() {
