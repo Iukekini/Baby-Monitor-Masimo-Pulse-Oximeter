@@ -83,29 +83,37 @@ exports.historicalSPO2Data = function (req, res) {
                     //Calcuate the date time from the group. 
                     var eventDate = new Date(id.month + "/" + id.day + "/" + id.year + " " + id.hour + ":" + id.minute + ".00")
                     
-                    //Add to SPO2 results. 
-                    results.push(
-                        {
-                            //Get date and add the timezone offset so that it shows correct on the graph. 
-                            x: eventDate.getTime() + eventDate.getTimezoneOffset(),
-                            y: element.value
-                        });
-
-                    if (id.alarm != "0000") {
-                        //we have an alarm.
+                    var minDate = new Date('12/18/2015');
+                    if (minDate <= eventDate)
+                    {
                         
-                        var alarmTitle = "Alarm"
-                        //Check to see if the alarm is now silenced. Change Title to reflect. 
-                        if (id.alarm == "0020") {
-                            alarmTitle = "Alarm Silenced"
+                    
+                        var value = element.value;
+                        if (value < 70)
+                            value = null;
+                        //Add to SPO2 results. 
+                        results.push(
+                            {
+                                //Get date and add the timezone offset so that it shows correct on the graph. 
+                                x: eventDate.getTime() + eventDate.getTimezoneOffset(),
+                                y: value
+                            });
+
+                        if (id.alarm != "0000") {
+                            //we have an alarm.
+                            
+                            var alarmTitle = "Alarm"
+                            //Check to see if the alarm is now silenced. Change Title to reflect. 
+                            if (id.alarm == "0020") {
+                                alarmTitle = "Alarm Silenced"
+                            }
+                            
+                                alarms.push(
+                                    {
+                                        x: eventDate.getTime() + eventDate.getTimezoneOffset(),
+                                        y: element.value                                });
                         }
-                        
-                            alarms.push(
-                                {
-                                    x: eventDate.getTime() + eventDate.getTimezoneOffset(),
-                                    y: element.value                                });
                     }
-
                 }, this);
                 
                 //Sort the SPO2 Results. 
@@ -113,8 +121,24 @@ exports.historicalSPO2Data = function (req, res) {
                     return a.x - b.x;
                 })
 
+                var addResults = [];
+                var lastDate = results[0].x;
+                results.forEach(function(element) {
+                    
+                    while(lastDate < element.x){
+                        lastDate = lastDate + (180*1000);
+                        addResults.push(
+                            {
+                                x: lastDate, 
+                                y: null
+                            });
+                    }
+                    addResults.push(element);
+                    lastDate = element.x
+                }, this);
+
                 //Create json object to return. 
-                var graphData = { alarms: alarms, spo2: results };
+                var graphData = { alarms: alarms, spo2: addResults };
                 res.send(graphData);
             })
 

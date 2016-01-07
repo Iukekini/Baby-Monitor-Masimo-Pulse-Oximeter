@@ -6,7 +6,7 @@ $(document).ready(function () {
             $('#MAINGRAPH').highcharts('StockChart',{
                 
                 title: {
-                    text: 'Kaleo O2 Levels'
+                    text: 'Historical Oxygen Levels'
                 },
                 subtitle: {
                     text: document.ontouchstart === undefined ?
@@ -18,7 +18,8 @@ $(document).ready(function () {
                 yAxis: {
                     title: {
                         text: 'SPO2 %'
-                    }
+                    },
+                    floor: 70
                 },
                 legend: {
                     enabled: false

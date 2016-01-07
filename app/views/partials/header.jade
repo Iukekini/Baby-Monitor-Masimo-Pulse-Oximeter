@@ -13,10 +13,16 @@
       ul.nav.navbar-nav
         li(class=title=='Home'?'active':undefined)
           a(href='/') Home
-        li(class=title=='Status'?'active':undefined)
-          a(href='/status') Live Status
-        li(class=title=='Historical'?'active':undefined)
-          a(href='/historical') Historical Data
+        if user
+            if user.live
+                li(class=title=='Status'?'active':undefined)
+                    a(href='/status') Live Status
+            if user.history
+                li(class=title=='Historical'?'active':undefined)
+                    a(href='/historical') Historical Data
+            if user.admin
+                li(class=title=='Admin'?'active':undefined)
+                    a(href='/admin') Admin
       ul.nav.navbar-nav.navbar-right
         if !user
           li(class=title=='Login'?'active':undefined)

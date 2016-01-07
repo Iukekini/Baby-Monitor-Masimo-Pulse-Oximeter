@@ -26,6 +26,7 @@ var sass = require('node-sass-middleware');
  */
 var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
+var adminController = require('./controllers/admin');
 
 /**
  * API keys and Passport configuration.
@@ -106,6 +107,13 @@ app.get('/historicalSPO2Data', passportConf.isAuthenticated, homeController.hist
 app.get('/status', passportConf.isAuthenticated, homeController.status);
 app.get('/historical', passportConf.isAuthenticated, homeController.historical);
 
+
+/*
+Admin App routs
+*/
+
+app.get('/admin',passportConf.isAuthenticated, adminController.accounts);
+app.get('/admin/updateRights/:id/:role/:state', passportConf.isAuthenticated, adminController.updateRights);
 /*
 Account App Routes
 */

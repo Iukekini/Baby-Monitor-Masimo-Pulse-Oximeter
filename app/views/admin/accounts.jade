@@ -1,0 +1,31 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 Users
+    table.table
+        thead
+            tr
+                th 
+                th Email
+                th Name
+                th Admin
+                th History
+                th Live
+        tbody
+            each val in users
+                tr
+                    td
+                        img(src='#{val.profile.picture}')
+                    td #{val.email}
+                    td #{val.profile.name}
+                    td 
+                        input(type='checkbox',name='admin' checked=val.admin onchange='updateRights("#{val.id}", "admin",  this.checked);')
+                    td 
+                        input(type='checkbox',name='history', checked=val.history onchange='updateRights("#{val.id}", "history",  this.checked);' )
+                    td 
+                        input(type='checkbox',name='live', checked=val.live onchange='updateRights("#{val.id}", "live",  this.checked);' )
+                        
+                        
+block scripts
+    script(src='/js/admin.js')

@@ -127,7 +127,7 @@ $(document).ready(function () {
                 }
             }, { // OK
                     from: 84,
-                    to: 93,
+                    to: 88,
                     color: 'rgba(255, 255, 0, 0.1)',
                     label: {
                         text: 'OK',
@@ -136,7 +136,7 @@ $(document).ready(function () {
                         }
                     }
                 }, { // Good
-                    from: 93,
+                    from: 88,
                     to: 100,
                     color: 'rgba(0, 255, 0, 0.1)',
                     label: {
