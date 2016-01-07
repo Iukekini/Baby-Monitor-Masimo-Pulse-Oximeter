@@ -78,6 +78,7 @@ exports.historicalSPO2Data = function (req, res) {
                 //Sucess from Mongo. 
                 var results = [];
                 var alarms = [];
+                var offset = (1000 * 60 * 60 * 8);
                 
                 //For each Document Return Added it to either the SPO2 Graph resutls or the Alarm Results. 
                 docs.forEach(function (element) {
@@ -97,7 +98,7 @@ exports.historicalSPO2Data = function (req, res) {
                         results.push(
                             {
                                 //Get date and add the timezone offset so that it shows correct on the graph. 
-                                x: eventDate.getTime() + eventDate.getTimezoneOffset(),
+                                x: eventDate.getTime() ,
                                 y: value,
                                 low: element.min,
                                 high: element.max
@@ -114,7 +115,7 @@ exports.historicalSPO2Data = function (req, res) {
                             
                                 alarms.push(
                                     {
-                                        x: eventDate.getTime() + eventDate.getTimezoneOffset(),
+                                        x: eventDate.getTime() ,
                                         y: element.value                                });
                         }
                     }
