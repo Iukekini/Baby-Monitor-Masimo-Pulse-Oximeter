@@ -47,7 +47,7 @@ $(document).ready(function () {
                     count : 1,
                     text : '1D'
                 },],
-                selected : 0,
+                selected : 1,
                 inputEnabled : true
             },
 
