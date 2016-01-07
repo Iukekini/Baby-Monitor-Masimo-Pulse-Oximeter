@@ -56,9 +56,9 @@ exports.historicalSPO2Data = function (req, res) {
     //Group Events by Year/Month/Day/Minute/Alarm
     //Get the Average of the SPO2 for the group.
     RadEvent
-        .aggregate(
-            {
-                $group: {
+        .aggregate([
+                {$match: { spo2 : { $ne: -1}}},
+                {$group: {
                     _id: {
                         minute: { $minute: "$date" },
                         hour: { $hour: "$date" },
@@ -68,8 +68,10 @@ exports.historicalSPO2Data = function (req, res) {
                         alarm: "$alarm"
                     },
                     value: { $avg: "$spo2" },
+                    min: {$min: "$spo2"},
+                    max: {$max: "$spo2"}
                 },
-            }
+                }]
 
             , function (err, docs) {
             
@@ -96,7 +98,9 @@ exports.historicalSPO2Data = function (req, res) {
                             {
                                 //Get date and add the timezone offset so that it shows correct on the graph. 
                                 x: eventDate.getTime() + eventDate.getTimezoneOffset(),
-                                y: value
+                                y: value,
+                                low: element.min,
+                                high: element.max
                             });
 
                         if (id.alarm != "0000") {
@@ -125,18 +129,24 @@ exports.historicalSPO2Data = function (req, res) {
                 var lastDate = results[0].x;
                 results.forEach(function(element) {
                     
-                    while(lastDate < element.x){
-                        lastDate = lastDate + (180*1000);
+                    while((lastDate + (120*1000)) < element.x){
+                        lastDate = lastDate + (120*1000);
                         addResults.push(
                             {
                                 x: lastDate, 
-                                y: null
+                                y: null,
+                                low: null,
+                                high: null,
                             });
                     }
                     addResults.push(element);
                     lastDate = element.x
                 }, this);
 
+                //Sort the SPO2 Results. 
+                addResults = addResults.sort(function (a, b) {
+                    return a.x - b.x;
+                })
                 //Create json object to return. 
                 var graphData = { alarms: alarms, spo2: addResults };
                 res.send(graphData);

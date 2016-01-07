@@ -24,29 +24,40 @@ $(document).ready(function () {
                 legend: {
                     enabled: false
                 },
+    plotOptions: {
+        line: {
+            connectNulls: false
+        }
+    },
             rangeSelector : {
                 buttons : [{
                     type : 'hour',
                     count : 1,
-                    text : '1h'
+                    text : '1H'
+                },{
+                    type : 'hour',
+                    count : 6,
+                    text : '6H'
+                },{
+                    type : 'hour',
+                    count : 12,
+                    text : '12H'
                 }, {
                     type : 'day',
                     count : 1,
                     text : '1D'
-                }, , {
-                    type : 'week',
-                    count : 1,
-                    text : '1W'
-                }, {
-                    type : 'all',
-                    count : 1,
-                    text : 'All'
-                }],
-                selected : 1,
-                inputEnabled : false
+                },],
+                selected : 0,
+                inputEnabled : true
             },
 
                 series: [{
+                    type: 'columnrange',
+                    name: 'O2%',
+                    data: data.spo2,
+                    connectNulls: false,
+                    turboThreshold: 0
+                },{
                     type: 'spline',
                     name: 'O2%',
                     id: 'spo2',

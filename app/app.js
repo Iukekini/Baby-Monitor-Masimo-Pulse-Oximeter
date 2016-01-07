@@ -19,7 +19,7 @@ var path = require('path');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var expressValidator = require('express-validator');
-var sass = require('node-sass-middleware');
+/*var sass = require('node-sass-middleware');*/
 
 /**
  * Controllers (route handlers).
@@ -56,13 +56,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(compress());
 
-
+/*
 app.use(sass({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
   debug: true,
   outputStyle: 'expanded'
-}));
+}));*/
 
 app.use(logger('dev'));
 app.use(favicon(path.join(__dirname, 'public', 'favicon-heart.ico')));
