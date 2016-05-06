@@ -9,6 +9,7 @@ block content
                 th 
                 th Email
                 th Name
+                th Last Login
                 th Admin
                 th History
                 th Live
@@ -19,6 +20,7 @@ block content
                         img(src='#{val.profile.picture}')
                     td #{val.email}
                     td #{val.profile.name}
+                    td #{val.lastLogin}
                     td 
                         input(type='checkbox',name='admin' checked=val.admin onchange='updateRights("#{val.id}", "admin",  this.checked);')
                     td 

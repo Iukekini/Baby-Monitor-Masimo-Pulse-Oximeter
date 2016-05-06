@@ -79,6 +79,8 @@ passport.use(new GoogleStrategy(secrets.google, function(req, accessToken, refre
   } else {
     User.findOne({ google: profile.id }, function(err, existingUser) {
       if (existingUser) {
+        existingUser.lastLogin = new Date().toString();
+        existingUser.save();
         return done(null, existingUser);
       }
       User.findOne({ email: profile.emails[0].value }, function(err, existingEmailUser) {
@@ -89,6 +91,7 @@ passport.use(new GoogleStrategy(secrets.google, function(req, accessToken, refre
           var user = new User();
           user.email = profile.emails[0].value;
           user.google = profile.id;
+          user.lastLogin = new Date().toString();
           user.tokens.push({ kind: 'google', accessToken: accessToken });
           user.profile.name = profile.displayName;
           user.profile.gender = profile._json.gender;
