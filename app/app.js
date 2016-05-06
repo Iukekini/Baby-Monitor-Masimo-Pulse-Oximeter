@@ -102,11 +102,13 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
  * Primary app routes.
  */
 app.get('/', homeController.index);
-app.get('/data', passportConf.isAuthenticated, homeController.data);
+app.get('/data', homeController.data);
+app.get('/sampledata', homeController.sampleData);
 app.get('/historicalSPO2Data', passportConf.isAuthenticated, homeController.historicalSPO2Data);
 app.get('/status', passportConf.isAuthenticated, homeController.status);
 app.get('/historical', passportConf.isAuthenticated, homeController.historical);
-
+app.get('/pushdeviceadd/:deviceToken', homeController.addDevice)
+app.get('/pushnotification/:message', homeController.pushNotification)
 
 /*
 Admin App routs

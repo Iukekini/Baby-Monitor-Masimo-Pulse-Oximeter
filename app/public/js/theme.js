@@ -1,8 +1,7 @@
 
     Highcharts.setOptions({
-        global: {
-            useUTC: false
-        }
+      useUTC: false,
+      timezoneOffset: 6 * 60
     });
     // Load the fonts
     Highcharts.createElement('link', {

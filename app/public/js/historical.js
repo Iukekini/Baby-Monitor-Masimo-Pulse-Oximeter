@@ -1,63 +1,99 @@
-$(document).ready(function () {
-  
-    $(function () {
-        $.getJSON('/historicalspo2data', function (data) {
+/**
+     * Load new data depending on the selected min and max
+     */
+function afterSetExtremes() {
 
-            $('#MAINGRAPH').highcharts('StockChart',{
-                
-                title: {
-                    text: 'Historical Oxygen Levels'
-                },
-                subtitle: {
-                    text: document.ontouchstart === undefined ?
-                        'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-                },
-                xAxis: {
-                    type: 'datetime'
-                },
-                yAxis: {
-                    title: {
-                        text: 'SPO2 %'
-                    },
-                    floor: 70
-                },
-                legend: {
-                    enabled: false
-                },
-    plotOptions: {
-        line: {
-            connectNulls: false
-        }
-    },
-            rangeSelector : {
-                buttons : [{
-                    type : 'hour',
-                    count : 1,
-                    text : '1H'
-                },{
-                    type : 'hour',
-                    count : 6,
-                    text : '6H'
-                },{
-                    type : 'hour',
-                    count : 12,
-                    text : '12H'
-                }, {
-                    type : 'day',
-                    count : 1,
-                    text : '1D'
-                },],
-                selected : 1,
-                inputEnabled : true
+    var chart = $('#MAINGRAPH').highcharts();
+    var e = chart.xAxis[0].getExtremes();
+    chart.showLoading('Loading data from server...');
+    $.getJSON('/historicalspo2data?start=' + Math.round(e.min) +
+        '&end=' + Math.round(e.max), function (data) {
+
+            chart.series[0].setData(data.spo2);
+            chart.series[1].setData(data.spo2);
+            chart.series[2].setData(data.alarms);
+            chart.series[3].setData(data.bpm);
+            chart.series[4].setData(data.pi);
+            chart.hideLoading();
+        });
+}
+
+
+$(document).ready(function () {
+
+    $.getJSON('/historicalspo2data', function (data) {
+
+        $('#MAINGRAPH').highcharts('StockChart', {
+
+            chart: {
+                zoomType: 'x'
             },
 
-                series: [{
+            navigator: {
+                adaptToUpdatedData: false,
+                series: {
+                    data: data.spo2
+                }
+            },
+            scrollbar: {
+                liveRedraw: false
+            },
+            title: {
+                text: 'Historical Oxygen Levels'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                    'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+            },
+            xAxis: {
+                type: 'datetime',
+                events: {
+                    afterSetExtremes: afterSetExtremes
+                }
+            },
+
+            legend: {
+                enabled: true
+            },
+            plotOptions: {
+                line: {
+                    connectNulls: false
+                }
+            },
+            rangeSelector: {
+                buttons: [
+                    {
+                        type: 'hour',
+                        count: 6,
+                        text: '6H'
+                    },
+                    {
+                        type: 'hour',
+                        count: 12,
+                        text: '12H'
+                    },
+                    {
+                        type: 'day',
+                        count: 1,
+                        text: '1D'
+                    },
+                    {
+                        type: 'all',
+                        text: 'All'
+                    }
+                ],
+                selected: 1,
+                inputEnabled: true
+            },
+
+            series: [
+                {
                     type: 'columnrange',
                     name: 'O2%',
                     data: data.spo2,
-                    connectNulls: false,
                     turboThreshold: 0
-                },{
+                },
+                {
                     type: 'spline',
                     name: 'O2%',
                     id: 'spo2',
@@ -71,13 +107,29 @@ $(document).ready(function () {
                     fillColor: 'rgba(178,34,34,0.5)',
                     data: data.alarms,
                     onSeries: 'spo2',
+                    turboThreshold: 0,
                     showInLegend: false,
                     tooltip: {
                         headerFormat: '<b>{series.name}</b><br>',
-                        pointFormat: ('{point.y} O2%')
+                        pointFormat: ('{point.y} O2%</br>{point.bpm} BPM</br>{point.pi} PI')
                     }
+                },
+                {
+                    type: 'spline',
+                    name: 'BPM',
+                    id: 'bpm',
+                    data: data.bpm,
+                    turboThreshold: 0
+                },
+                {
+                    type: 'spline',
+                    name: 'PI',
+                    id: 'pi',
+                    data: data.pi,
+                    turboThreshold: 0,
+                    visible: false
                 }]
-            });
         });
+        afterSetExtremes()
     });
 });
