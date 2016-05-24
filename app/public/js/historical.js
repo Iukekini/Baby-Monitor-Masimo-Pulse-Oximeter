@@ -6,6 +6,7 @@ function afterSetExtremes() {
     var chart = $('#MAINGRAPH').highcharts();
     var e = chart.xAxis[0].getExtremes();
     chart.showLoading('Loading data from server...');
+    $('#progressmodel').modal('show');
     $.getJSON('/historicalspo2data?start=' + Math.round(e.min) +
         '&end=' + Math.round(e.max), function (data) {
 
@@ -15,12 +16,14 @@ function afterSetExtremes() {
             chart.series[3].setData(data.bpm);
             chart.series[4].setData(data.pi);
             chart.hideLoading();
+            
+    $('#progressmodel').modal('hide');
         });
 }
 
 
 $(document).ready(function () {
-
+    $('#progressmodel').modal('toggle');
     $.getJSON('/historicalspo2data', function (data) {
 
         $('#MAINGRAPH').highcharts('StockChart', {
@@ -119,7 +122,8 @@ $(document).ready(function () {
                     name: 'BPM',
                     id: 'bpm',
                     data: data.bpm,
-                    turboThreshold: 0
+                    turboThreshold: 0,
+                    visible: false
                 },
                 {
                     type: 'spline',
@@ -130,6 +134,8 @@ $(document).ready(function () {
                     visible: false
                 }]
         });
-        afterSetExtremes()
+        afterSetExtremes();
+    $('#progressmodel').modal('hide');
+        
     });
 });

@@ -11737,3 +11737,9 @@ footer p, footer ul {
 .fa {
   margin-right: 6px;
 }
+
+.modal-vertical-centered {
+  transform: translate(0, 50%) !important;
+  -ms-transform: translate(0, 50%) !important; /* IE 9 */
+  -webkit-transform: translate(0, 50%) !important; /* Safari and Chrome */
+}

@@ -134,6 +134,7 @@ exports.historicalSPO2Data = function (req, res) {
                     {
                         $match: {
                             spo2: { $ne: -1 },
+                            pi: {$gte: 1},
                             date: {
                                 $gte: start,
                                 $lte: end
@@ -170,6 +171,7 @@ exports.historicalSPO2Data = function (req, res) {
                     {
                         $match: {
                             spo2: { $ne: -1 },
+                            pi: {$gte: 1},
                             date: {
                                 $gte: start,
                                 $lte: end
@@ -204,7 +206,7 @@ exports.historicalSPO2Data = function (req, res) {
 
         RadEvent
             .aggregate([
-                { $match: { spo2: { $ne: -1 } } },
+                { $match: { spo2: { $ne: -1 }, pi: {$gte: 1} } },
                 {
                     $group: {
                         _id: {

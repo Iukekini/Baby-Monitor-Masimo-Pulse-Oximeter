@@ -2,11 +2,24 @@ extends layout
 
 block content
   p.lead Graphs
-  hr
+  hr      
   .row
-    col-sm-12
+    .col-sm-12
       #MAINGRAPH(style='min-width: 310px; height: 600px; margin: 0 auto')
+  .row
+    .col-md-12
+      p.text-center
+        small you can click on the legend names (O2, BPM, PI) at the bottom of the graph to turn on and off different results
+          
 
+  .modal.fade(tabindex='-1', role='dialog', id="progressmodel")
+    .modal-dialog.modal-vertical-centered
+      .modal-content
+        .modal-body
+          h2 Please wait while we load data from the server. This may take a minute.
+          .progress
+            .progress-bar.progress-bar-striped.active(role='progressbar', aria-valuenow='100', aria-valuemin='0', aria-valuemax='100', style='width: 100%')
+              span.sr-only 45% Complete
 block scripts
     script(src='https://code.highcharts.com/stock/highstock.js')
     script(src='https://code.highcharts.com/stock/highcharts-more.js')
