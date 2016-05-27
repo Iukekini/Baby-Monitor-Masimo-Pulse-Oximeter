@@ -4,6 +4,7 @@
 function afterSetExtremes() {
 
     var chart = $('#MAINGRAPH').highcharts();
+    var piechart = $('#PIECHART').highcharts();
     var e = chart.xAxis[0].getExtremes();
     chart.showLoading('Loading data from server...');
     $('#progressmodel').modal('show');
@@ -16,14 +17,66 @@ function afterSetExtremes() {
             chart.series[3].setData(data.bpm);
             chart.series[4].setData(data.pi);
             chart.hideLoading();
-            
-    $('#progressmodel').modal('hide');
+            $('#progressmodel').modal('hide');
         });
+        
+         $.getJSON('/SPO2Count?start=' + Math.round(e.min) +
+        '&end=' + Math.round(e.max), function (data) {
+                piechart.series[0].setData(data);
+        });
+        
 }
 
 
 $(document).ready(function () {
     $('#progressmodel').modal('toggle');
+    
+        // Make monochrome colors and set them as default for all pies
+    Highcharts.getOptions().plotOptions.pie.colors = (function () {
+        var colors = [],
+            base = Highcharts.getOptions().colors[0],
+            i;
+
+        for (i = 0; i < 10; i += 1) {
+            // Start out with a darkened base color (negative brighten), and end
+            // up with a much brighter color
+            colors.push(Highcharts.Color(base).brighten((i - 3) / 7).get());
+        }
+        return colors;
+    }());
+    
+    $('#PIECHART').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        title: {
+            text: 'O2<br>Percentages',
+            align: 'center',
+            verticalAlign: 'middle',
+            y: 40
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                
+                startAngle: -90,
+                endAngle: 90,
+                center: ['50%', '75%']
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'O2',
+            
+        }]
+    });
+    
+    
+    
     $.getJSON('/historicalspo2data', function (data) {
 
         $('#MAINGRAPH').highcharts('StockChart', {

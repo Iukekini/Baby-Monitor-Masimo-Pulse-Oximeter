@@ -112,6 +112,64 @@ function random(low, high) {
     return Math.random() * (high - low) + low;
 }
 
+
+
+exports.SPO2Count = function (req, res) {
+    res.setHeader('Content-Type', 'application/json');
+
+    //Group Events by Year/Month/Day/Minute/Alarm
+    //Get the Average of the SPO2 for the group.
+    if (req.query.start != null) {
+        var startMS = parseFloat(req.query.start);
+        var endMS = parseFloat(req.query.end);
+        var start = new Date(startMS);
+        var end = new Date(endMS);
+        var duration = endMS - startMS;
+        
+         RadEvent
+                .aggregate([
+                    {
+                        $match: {
+                            spo2: { $ne: -1 },
+                            pi: {$gte: 1},
+                            date: {
+                                $gte: start,
+                                $lte: end
+                            }
+                        },
+
+                    },
+                    {
+                        $group: {
+                            _id: {
+                                
+                                spo2: "$spo2"
+                            },
+                            count: { $sum: 1 }
+                        },
+                    }]
+
+                , function (err, docs) {
+                    
+                    var total = 0;
+                    var results = [];
+                     //For each Document Return Added it to either the SPO2 Graph resutls or the Alarm Results. 
+                    docs.forEach(function (element) {
+                        total += element.count;
+                    });
+                    
+                    docs.forEach(function (element) {
+                        results.push({
+                            name: element._id.spo2,
+                            y: (element.count / total) * 100
+                        });
+                    });
+                    results = results.sort(namesort);
+                    res.send(results);
+                });
+    }
+}
+
 /**
  * GET /historicalSPO2Data
  * Historical SPO2 Graph Data
@@ -154,6 +212,7 @@ exports.historicalSPO2Data = function (req, res) {
                                 alarm: "$alarm"
                             },
                             value: { $avg: "$spo2" },
+                            std: { $stdDevPop: "$spo2" },
                             bpmValue: { $avg: "$bpm" },
                             piValue: { $avg: "$pi" },
                             min: { $min: "$spo2" },
@@ -320,6 +379,9 @@ function RenderData(docs, res) {
 
 function timesort(a, b) {
     return a.x - b.x;
+}
+function namesort(a, b) {
+    return a.name - b.name;
 }
 
 function sortandnormalize(list, SkipOffset) {

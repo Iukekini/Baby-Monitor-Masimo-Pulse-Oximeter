@@ -105,6 +105,7 @@ app.get('/', homeController.index);
 app.get('/data', homeController.data);
 app.get('/sampledata', homeController.sampleData);
 app.get('/historicalSPO2Data', passportConf.isAuthenticated, homeController.historicalSPO2Data);
+app.get('/SPO2Count', passportConf.isAuthenticated, homeController.SPO2Count);
 app.get('/status', passportConf.isAuthenticated, homeController.status);
 app.get('/historical', passportConf.isAuthenticated, homeController.historical);
 app.get('/pushdeviceadd/:deviceToken', homeController.addDevice)
