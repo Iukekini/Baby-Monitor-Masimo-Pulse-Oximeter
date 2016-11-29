@@ -36,6 +36,8 @@ exports.historical = function (req, res) {
  * Get the last record inserted into the Mongo db and returns it to the user. 
  */
 exports.data = function (req, res) {
+
+    var deviceToken = req.params.deviceToken
     res.setHeader('Content-Type', 'application/json');
     var events = RadEvent.find({})
         .sort({ date: -1 })
