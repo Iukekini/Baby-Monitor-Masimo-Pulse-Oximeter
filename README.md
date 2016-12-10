@@ -1,6 +1,6 @@
 ## Baby Monitor and Historical Data from a Masimo pulse oximeter
 
-[![Build Status](https://travis-ci.org/Iukekini/Baby-Monitor-RAD8.svg?branch=master)](https://travis-ci.org/Iukekini/Baby-Monitor-RAD8)
+[![Build Status](https://travis-ci.org/Iukekini/Baby-Monitor-Masimo-Pulse-Oximeter.svg?branch=master)](https://travis-ci.org/Iukekini/Baby-Monitor-Masimo-Pulse-Oximeter)
 
 # Introduction
 
