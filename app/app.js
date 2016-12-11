@@ -32,6 +32,7 @@ var adminController = require('./controllers/admin');
  * API keys and Passport configuration.
  */
 var secrets = require('./config/secrets');
+var settings = require('./config/settings');
 var passportConf = require('./config/passport');
 
 /**
@@ -87,6 +88,7 @@ app.use(lusca({
 }));
 app.use(function(req, res, next) {
   res.locals.user = req.user;
+  res.locals.theme = settings.theme;
   next();
 });
 app.use(function(req, res, next) {

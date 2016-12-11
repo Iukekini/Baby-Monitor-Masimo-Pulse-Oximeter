@@ -5,6 +5,7 @@ var nodemailer = require('nodemailer');
 var passport = require('passport');
 var User = require('../models/User');
 var secrets = require('../config/secrets');
+var settings = require('../config/settings');
 
 /**
  * GET /login
@@ -46,6 +47,7 @@ exports.postLogin = function (req, res, next) {
       if (err) {
         return next(err);
       }
+
 
       user.lastLogin = new Date().toString();
       user.save();
@@ -103,6 +105,11 @@ exports.postSignup = function (req, res, next) {
       req.flash('errors', { msg: 'Account with that email address already exists.' });
       return res.redirect('/signup');
     }
+
+    /* set default access rights */
+    user.admin = settings.newuserpermissions.admin;
+    user.history = settings.newuserpermissions.history;
+    user.live = settings.newuserpermissions.live;
     user.lastLogin = new Date().toString();
     user.save(function (err) {
       if (err) {

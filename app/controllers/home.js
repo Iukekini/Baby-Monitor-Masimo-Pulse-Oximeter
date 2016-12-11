@@ -1,5 +1,6 @@
 var RadEvent = require('../models/RADEvent');
 var Device = require('../models/pushNotificationDevice');
+var settings = require('../config/settings');
 var apn = require('apn')
 /**
  * GET /
