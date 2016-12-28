@@ -1,15 +1,15 @@
 extends layout
 
 block content
-  p.lead Vital Stats for Kaleo
+  p.lead Vital Stats for #{theme.babyname}
   hr
   .row
     .col-sm-12.col-md-6.col-lg-3
       .well.infobox
         h1 BPM
         #BPM 150
-         
-            
+
+
     .col-sm-12.col-md-6.col-lg-3
       .well.infobox
         h1 O2 Level
@@ -21,7 +21,7 @@ block content
     .col-sm-12.col-md-6.col-lg-3
       #messagediv.alert.alert-warning.infobox
         h1#message No Connection
-        
+
   p.lead Graphs
   hr
   .row
@@ -41,4 +41,3 @@ block scripts
     script(src='/js/lib/highcharts.exporting.js')
     script(src='/js/theme.js')
     script(src='/js/main.js')
-

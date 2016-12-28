@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  p.lead How did #{theme.babyname} sleep tonight?
+  select
+    each hows, i in [ 'was sick', 'woke up a lot of times' ]
+      option(value=i) #{hows}
+
+block scripts
+    script(src='/js/theme.js')
+    script(src='/js/main.js')

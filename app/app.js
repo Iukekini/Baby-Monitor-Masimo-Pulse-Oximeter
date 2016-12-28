@@ -110,6 +110,7 @@ app.get('/historicalSPO2Data', passportConf.isAuthenticated, homeController.hist
 app.get('/SPO2Count', passportConf.isAuthenticated, homeController.SPO2Count);
 app.get('/status', passportConf.isAuthenticated, homeController.status);
 app.get('/historical', passportConf.isAuthenticated, homeController.historical);
+app.get('/tags', passportConf.isAuthenticated, homeController.tags);
 app.get('/pushdeviceadd/:deviceToken', homeController.addDevice)
 app.get('/pushnotification/:message', homeController.pushNotification)
 

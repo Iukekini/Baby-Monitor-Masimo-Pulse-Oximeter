@@ -6,13 +6,14 @@ block content
     table.table
         thead
             tr
-                th 
+                th
                 th Email
                 th Name
                 th Last Login
                 th Admin
                 th History
                 th Live
+                th Tags
         tbody
             each val in users
                 tr
@@ -21,13 +22,15 @@ block content
                     td #{val.email}
                     td #{val.profile.name}
                     td #{val.lastLogin}
-                    td 
+                    td
                         input(type='checkbox',name='admin' checked=val.admin onchange='updateRights("#{val.id}", "admin",  this.checked);')
-                    td 
+                    td
                         input(type='checkbox',name='history', checked=val.history onchange='updateRights("#{val.id}", "history",  this.checked);' )
-                    td 
+                    td
                         input(type='checkbox',name='live', checked=val.live onchange='updateRights("#{val.id}", "live",  this.checked);' )
-                        
-                        
+                    td
+                        input(type='checkbox',name='tags', checked=val.live onchange='updateRights("#{val.id}", "tags",  this.checked);' )
+
+
 block scripts
     script(src='/js/admin.js')
