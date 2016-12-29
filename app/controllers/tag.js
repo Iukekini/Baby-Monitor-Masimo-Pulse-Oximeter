@@ -15,6 +15,7 @@ exports.insertTag = function(req, res){
 
   function onInsert(err, doc) {
     if (err) {
+        res.status(400).json({'err': err});
     } else {
         res.send(doc)
     }
