@@ -2,9 +2,11 @@ extends layout
 
 block content
   p.lead How did #{theme.babyname} sleep tonight?
-  select
+  select(id='tags-select')
     each hows, i in [ 'was sick', 'woke up a lot of times' ]
       option(value=i) #{hows}
+
+  a.btn.btn-primary(onclick='save_tag()') Save
 
 block scripts
     script(src='/js/theme.js')

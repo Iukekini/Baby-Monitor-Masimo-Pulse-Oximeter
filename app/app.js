@@ -27,6 +27,7 @@ var expressValidator = require('express-validator');
 var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
 var adminController = require('./controllers/admin');
+var tagController = require('./controllers/tag');
 
 /**
  * API keys and Passport configuration.
@@ -120,6 +121,12 @@ Admin App routs
 
 app.get('/admin',passportConf.isAuthenticated, adminController.accounts);
 app.get('/admin/updateRights/:id/:role/:state', passportConf.isAuthenticated, adminController.updateRights);
+
+/*
+Tag App routs
+*/
+app.get('/tag/insertTag/:text', passportConf.isAuthenticated, tagController.insertTag);
+
 /*
 Account App Routes
 */
