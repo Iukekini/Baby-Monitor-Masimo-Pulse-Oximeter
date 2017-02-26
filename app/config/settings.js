@@ -9,7 +9,8 @@ module.exports = {
   newuserpermissions:{
     admin: true,
     history: true,
-    live: true
+    live: true,
+    tags: true
   }
 
 };

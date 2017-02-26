@@ -110,6 +110,7 @@ exports.postSignup = function (req, res, next) {
     user.admin = settings.newuserpermissions.admin;
     user.history = settings.newuserpermissions.history;
     user.live = settings.newuserpermissions.live;
+    user.tags = settings.newuserpermissions.tags;
     user.lastLogin = new Date().toString();
     user.save(function (err) {
       if (err) {

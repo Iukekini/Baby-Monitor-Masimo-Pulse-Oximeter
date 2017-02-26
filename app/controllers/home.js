@@ -31,10 +31,20 @@ exports.historical = function (req, res) {
         title: 'Historical'
     });
 };
+/**
+ * GET /tags
+ * Adding tags Page
+ */
+exports.tags = function (req, res) {
+    res.render('tags', {
+        title: 'Tags'
+    });
+};
+
 
 /**
  * GET /data
- * Get the last record inserted into the Mongo db and returns it to the user. 
+ * Get the last record inserted into the Mongo db and returns it to the user.
  */
 exports.data = function (req, res) {
 
@@ -62,7 +72,7 @@ exports.pushNotification = function (req, res) {
     var iosDevices = Device.find({ active: true });
 
     iosDevices.exec(function (e, docs) {
-        //send message 
+        //send message
         docs.forEach(function (element) {
             var myDevice = new apn.Device(element._doc.deviceToken);
             var note = new apn.Notification();
@@ -96,7 +106,7 @@ exports.addDevice = function (req, res) {
 };
 /**
  * GET /data
- * Get the last record inserted into the Mongo db and returns it to the user. 
+ * Get the last record inserted into the Mongo db and returns it to the user.
  */
 exports.sampleData = function (req, res) {
     var skip = random(1, 100)
@@ -128,7 +138,7 @@ exports.SPO2Count = function (req, res) {
         var start = new Date(startMS);
         var end = new Date(endMS);
         var duration = endMS - startMS;
-        
+
          RadEvent
                 .aggregate([
                     {
@@ -145,7 +155,7 @@ exports.SPO2Count = function (req, res) {
                     {
                         $group: {
                             _id: {
-                                
+
                                 spo2: "$spo2"
                             },
                             count: { $sum: 1 }
@@ -153,14 +163,14 @@ exports.SPO2Count = function (req, res) {
                     }]
 
                 , function (err, docs) {
-                    
+
                     var total = 0;
                     var results = [];
-                     //For each Document Return Added it to either the SPO2 Graph resutls or the Alarm Results. 
+                     //For each Document Return Added it to either the SPO2 Graph resutls or the Alarm Results.
                     docs.forEach(function (element) {
                         total += element.count;
                     });
-                    
+
                     docs.forEach(function (element) {
                         results.push({
                             name: element._id.spo2,
@@ -294,7 +304,7 @@ exports.historicalSPO2Data = function (req, res) {
 
 function RenderData(docs, res) {
 
-    //Sucess from Mongo. 
+    //Sucess from Mongo.
     var results = [];
     var bpm = [];
     var pi = [];
@@ -304,10 +314,10 @@ function RenderData(docs, res) {
     if (docs.length > 0) {
 
 
-        //For each Document Return Added it to either the SPO2 Graph resutls or the Alarm Results. 
+        //For each Document Return Added it to either the SPO2 Graph resutls or the Alarm Results.
         docs.forEach(function (element) {
             var id = element._id;
-            //Calcuate the date time from the group. 
+            //Calcuate the date time from the group.
             var eventDate;
 
             if (id.minute == null) {
@@ -327,10 +337,10 @@ function RenderData(docs, res) {
 
             if (element.value < 70)
                 element.value = null;
-            //Add to SPO2 results. 
+            //Add to SPO2 results.
             results.push(
                 {
-                    //Get date and add the timezone offset so that it shows correct on the graph. 
+                    //Get date and add the timezone offset so that it shows correct on the graph.
                     x: eventDate.getTime(),
                     y: element.value,
                     low: element.min,
@@ -349,7 +359,7 @@ function RenderData(docs, res) {
                 //we have an alarm.
 
                 var alarmTitle = "Alarm"
-                //Check to see if the alarm is now silenced. Change Title to reflect. 
+                //Check to see if the alarm is now silenced. Change Title to reflect.
                 if (id.alarm == "0020") {
                     alarmTitle = "Alarm Silenced"
                 }
@@ -366,15 +376,15 @@ function RenderData(docs, res) {
 
         }, this);
 
-        //Sort the SPO2 Results. 
+        //Sort the SPO2 Results.
         results = sortandnormalize(results, SkipOffset);
-        //Sort the bpm Results. 
+        //Sort the bpm Results.
         bpm = sortandnormalize(bpm, SkipOffset);
-        //Sort the pi Results. 
+        //Sort the pi Results.
         pi = sortandnormalize(pi, SkipOffset)
 
 
-        //Create json object to return. 
+        //Create json object to return.
         var graphData = { alarms: alarms, spo2: results, bpm: bpm, pi: pi };
         res.send(graphData);
     }

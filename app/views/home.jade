@@ -4,30 +4,36 @@ extends layout
 block content
     h1 #{theme.babyname} Rocks
     p.lead Heart rate and oxygen status for #{theme.babyname}
-    hr 
+    hr
     if user
         if user.live
             .row
                 .col-sm-6
                     h2 Live Status Graph
-                    p Heart rate and oxygen status from the pulse oximeter. Updated every 1 sec when #{theme.babyname} is sleeping at night. Not active during the day while he is out and about. 
+                    p Heart rate and oxygen status from the pulse oximeter. Updated every 1 sec when #{theme.babyname} is sleeping at night. Not active during the day while he is out and about.
                     p
                         a.btn.btn-primary(href='/status', role='button') Open Live Graph »
         if user.history
             .row
                 .col-sm-6
                     h2 Historical Data
-                    p Historical heart rate and oxygen readings from the pulse oximeter. 
+                    p Historical heart rate and oxygen readings from the pulse oximeter.
                     p
                         a.btn.btn-primary(href='/historical', role='button') Open History Graph »
-        if !user.history && !user.admin && !user.live
+        if user.tags
+            .row
+                .col-sm-6
+                    h2 Tags
+                    p Adding qualitative info on how #{theme.babyname} slept tonight.
+                    p
+                        a.btn.btn-primary(href='/tags', role='button') Open Tags tab »
+        if !user.history && !user.admin && !user.live && !user.tags
             .row
                 .col-sm-6
                     h2 Request Access
-                    p Thank you for signing up for #{theme.babyname} Rocks but an admin needs to grant you access to this awesomeness first. 
-                   
+                    p Thank you for signing up for #{theme.babyname} Rocks but an admin needs to grant you access to this awesomeness first.
+
     if !user
         .row
             .col-sm-12
                 h2 Login to access #{theme.babyname} Stats
-                

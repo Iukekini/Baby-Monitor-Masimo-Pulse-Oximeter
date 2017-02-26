@@ -20,6 +20,9 @@
             if user.history
                 li(class=title=='Historical'?'active':undefined)
                     a(href='/historical') Historical Data
+            if user.tags
+                li(class=title=='Tags'?'active':undefined)
+                    a(href='/tags') Tags
             if user.admin
                 li(class=title=='Admin'?'active':undefined)
                     a(href='/admin') Admin
@@ -44,4 +47,3 @@
               li.divider
               li
                 a(href='/logout') Logout
-       

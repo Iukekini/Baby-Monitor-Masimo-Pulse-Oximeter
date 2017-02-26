@@ -27,6 +27,7 @@ var expressValidator = require('express-validator');
 var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
 var adminController = require('./controllers/admin');
+var tagController = require('./controllers/tag');
 
 /**
  * API keys and Passport configuration.
@@ -110,6 +111,7 @@ app.get('/historicalSPO2Data', passportConf.isAuthenticated, homeController.hist
 app.get('/SPO2Count', passportConf.isAuthenticated, homeController.SPO2Count);
 app.get('/status', passportConf.isAuthenticated, homeController.status);
 app.get('/historical', passportConf.isAuthenticated, homeController.historical);
+app.get('/tags', passportConf.isAuthenticated, homeController.tags);
 app.get('/pushdeviceadd/:deviceToken', homeController.addDevice)
 app.get('/pushnotification/:message', homeController.pushNotification)
 
@@ -119,6 +121,12 @@ Admin App routs
 
 app.get('/admin',passportConf.isAuthenticated, adminController.accounts);
 app.get('/admin/updateRights/:id/:role/:state', passportConf.isAuthenticated, adminController.updateRights);
+
+/*
+Tag App routs
+*/
+app.get('/tag/insertTag/:text', passportConf.isAuthenticated, tagController.insertTag);
+
 /*
 Account App Routes
 */

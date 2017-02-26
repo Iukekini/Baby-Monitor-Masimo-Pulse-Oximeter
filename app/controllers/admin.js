@@ -30,8 +30,8 @@ exports.accounts = function (req, res) {
 
 exports.updateRights = function(req, res){
     User.findById(req.params.id, function(err, user) {
-    
-    
+
+
     if (req.params.role == "admin" && req.params.state == "true")
         user.admin = true;
     else if (req.params.role == "admin" && req.params.state == "false")
@@ -44,9 +44,13 @@ exports.updateRights = function(req, res){
         user.live = true;
     else if (req.params.role == "live" && req.params.state == "false")
         user.live = false;
-            
+    if (req.params.role == "tags" && req.params.state == "true")
+        user.tags = true;
+    else if (req.params.role == "tags" && req.params.state == "false")
+        user.tags = false;
+
     user.save(function(err) {
-      
+
       req.flash('success', { msg: 'Profile information updated.' });
     });
   });
