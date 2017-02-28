@@ -234,6 +234,7 @@ exports.historicalSPO2Data = function (req, res) {
                     }]
 
                 , function (err, docs) {
+                    if (err) console.trace(err)
                     RenderData(docs, res);
                 });
         } else {
@@ -270,6 +271,7 @@ exports.historicalSPO2Data = function (req, res) {
                     }]
 
                 , function (err, docs) {
+                    if (err) console.trace(err)
                     RenderData(docs, res);
                 });
         }
@@ -297,6 +299,7 @@ exports.historicalSPO2Data = function (req, res) {
                 }]
 
             , function (err, docs) {
+                if (err) console.trace(err)
                 RenderData(docs, res);
             });
     }
