@@ -8,6 +8,8 @@ import serial
 import Devices.RAD8
 import Devices.RAD7
 
+from datetime import datetime
+
 def read_and_parse_monitor_data():
     "Read from Serial port and parse depending on what device is selected"
     #config
@@ -37,7 +39,7 @@ def read_and_parse_monitor_data():
     while 1:
 	#read from Serial
         device_output = serial_connection.readline()
-        print device_output
+        print ('%s  -->%s' % (str(datetime.now()),device_output))
         try:
             event = None
             if device_type == "RAD8":
