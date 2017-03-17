@@ -216,12 +216,12 @@ exports.historicalSPO2Data = function (req, res) {
                     {
                         $group: {
                             _id: {
-                                year: { $year: "$date" },
+                                second: { $second: "$date" },
+                                minute: { $minute: "$date" },
+                                hour: { $hour: "$date" },
                                 month: { $month: "$date" },
                                 day: { $dayOfMonth: "$date" },
-                                hour: { $hour: "$date" },
-                                minute: { $minute: "$date" },
-                                second: { $second: "$date" },
+                                year: { $year: "$date" },
                                 alarm: "$alarm"
                             },
                             value: { $avg: "$spo2" },
@@ -231,9 +231,7 @@ exports.historicalSPO2Data = function (req, res) {
                             min: { $min: "$spo2" },
                             max: { $max: "$spo2" }
                         },
-                    }
-                    , { $sort : { _id : 1 } }
-                  ]
+                    }]
 
                 , function (err, docs) {
                     if (err) console.trace(err)
@@ -257,11 +255,11 @@ exports.historicalSPO2Data = function (req, res) {
                     {
                         $group: {
                             _id: {
-                                year: { $year: "$date" },
+                                minute: { $minute: "$date" },
+                                hour: { $hour: "$date" },
                                 month: { $month: "$date" },
                                 day: { $dayOfMonth: "$date" },
-                                hour: { $hour: "$date" },
-                                minute: { $minute: "$date" },
+                                year: { $year: "$date" },
                                 alarm: "$alarm"
                             },
                             value: { $avg: "$spo2" },
@@ -270,9 +268,7 @@ exports.historicalSPO2Data = function (req, res) {
                             min: { $min: "$spo2" },
                             max: { $max: "$spo2" }
                         },
-                    }
-                    , { $sort : { _id : 1 } }
-                  ]
+                    }]
 
                 , function (err, docs) {
                     if (err) console.trace(err)
@@ -288,10 +284,10 @@ exports.historicalSPO2Data = function (req, res) {
                 {
                     $group: {
                         _id: {
-                            year: { $year: "$date" },
+                            hour: { $hour: "$date" },
                             month: { $month: "$date" },
                             day: { $dayOfMonth: "$date" },
-                            hour: { $hour: "$date" },
+                            year: { $year: "$date" },
                             alarm: "$alarm"
                         },
                         value: { $avg: "$spo2" },
@@ -300,9 +296,8 @@ exports.historicalSPO2Data = function (req, res) {
                         min: { $min: "$spo2" },
                         max: { $max: "$spo2" }
                     },
-                }
-                    , { $sort : { _id : 1 } }
-                  ]
+                }]
+
             , function (err, docs) {
                 if (err) console.trace(err)
                 RenderData(docs, res);

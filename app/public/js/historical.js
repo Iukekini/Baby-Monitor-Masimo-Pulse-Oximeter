@@ -7,7 +7,7 @@ function afterSetExtremes() {
     var piechart = $('#PIECHART').highcharts();
     var e = chart.xAxis[0].getExtremes();
     chart.showLoading('Loading data from server...');
-//    $('#progressmodel').modal('show');
+    $('#progressmodel').modal('show');
     $.getJSON('/historicalspo2data?start=' + Math.round(e.min) +
         '&end=' + Math.round(e.max), function (data) {
 
@@ -17,22 +17,22 @@ function afterSetExtremes() {
             chart.series[3].setData(data.bpm);
             chart.series[4].setData(data.pi);
             chart.hideLoading();
-//            $('#progressmodel').modal('hide');
+            $('#progressmodel').modal('hide');
         });
-
+        
          $.getJSON('/SPO2Count?start=' + Math.round(e.min) +
         '&end=' + Math.round(e.max), function (data) {
                 piechart.series[0].setData(data);
         });
-
+        
 }
 
 
 $(document).ready(function () {
     $('#progressmodel').modal('toggle');
-
-
-
+    
+  
+    
     $('#PIECHART').highcharts({
         chart: {
             plotBorderWidth: 0,
@@ -47,7 +47,7 @@ $(document).ready(function () {
         },
         plotOptions: {
             pie: {
-
+                
                 startAngle: -90,
                 endAngle: 90,
                 center: ['50%', '75%']
@@ -56,12 +56,12 @@ $(document).ready(function () {
         series: [{
             type: 'pie',
             name: 'O2',
-
+            
         }]
     });
-
-
-
+    
+    
+    
     $.getJSON('/historicalspo2data', function (data) {
 
         $('#MAINGRAPH').highcharts('StockChart', {
@@ -172,9 +172,8 @@ $(document).ready(function () {
                     visible: false
                 }]
         });
-    $('#progressmodel').modal('show');
         afterSetExtremes();
     $('#progressmodel').modal('hide');
-
+        
     });
 });
