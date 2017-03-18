@@ -386,6 +386,8 @@ function RenderData(docs, res) {
         //Sort the pi Results.
         pi = sortandnormalize(pi, SkipOffset)
 
+       //Sort the Alarms Results(no normalization )
+        alarms = alarms.sort(timesort);
 
         //Create json object to return.
         var graphData = { alarms: alarms, spo2: results, bpm: bpm, pi: pi };
