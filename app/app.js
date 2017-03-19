@@ -28,7 +28,7 @@ var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
 var adminController = require('./controllers/admin');
 var tagController = require('./controllers/tag');
-var prunedController = require('./controllers/pruned');
+
 
 /**
  * API keys and Passport configuration.

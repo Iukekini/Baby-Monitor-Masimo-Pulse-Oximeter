@@ -2,8 +2,20 @@ extends layout
 
 block content
   p.lead Pruned view
+  hr
+  .row
+    .col-sm-12
+      #MAINGRAPHPRUNED(style='min-width: 310px; height: 600px; margin: 0 auto')
+  .row
+    .col-md-12
+      p.text-center
+        small you can click on the legend names (O2, BPM, PI) at the bottom of the graph to turn on and off different results
+
+
+
 
 block scripts
+    script(src='https://code.highcharts.com/stock/highstock.js')
+    script(src='https://code.highcharts.com/stock/highcharts-more.js')
     script(src='/js/theme.js')
-    script(src='/js/main.js')
-    script(src='/js/tag.js')
+    script(src='/js/pruned.js')
