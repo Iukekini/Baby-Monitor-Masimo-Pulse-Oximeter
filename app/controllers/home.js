@@ -40,6 +40,15 @@ exports.tags = function (req, res) {
         title: 'Tags'
     });
 };
+/**
+ * GET /pruned
+ * Adding pruned Page
+ */
+exports.pruned = function (req, res) {
+    res.render('pruned', {
+        title: 'Pruned'
+    });
+};
 
 
 /**

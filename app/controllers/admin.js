@@ -48,6 +48,10 @@ exports.updateRights = function(req, res){
         user.tags = true;
     else if (req.params.role == "tags" && req.params.state == "false")
         user.tags = false;
+    if (req.params.role == "pruned" && req.params.state == "true")
+        user.pruned = true;
+    else if (req.params.role == "pruned" && req.params.state == "false")
+        user.pruned = false;
 
     user.save(function(err) {
 

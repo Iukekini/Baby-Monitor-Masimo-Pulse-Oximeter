@@ -27,6 +27,13 @@ block content
                     p Adding qualitative info on how #{theme.babyname} slept tonight.
                     p
                         a.btn.btn-primary(href='/tags', role='button') Open Tags tab »
+        if user.pruned
+            .row
+                .col-sm-6
+                    h2 Pruned
+                    p Pruned historical data so that the client cache can handle it.
+                    p
+                    a.btn.btn-primary(href='/pruned', role='button') Open Pruned tab »
         if !user.history && !user.admin && !user.live && !user.tags
             .row
                 .col-sm-6

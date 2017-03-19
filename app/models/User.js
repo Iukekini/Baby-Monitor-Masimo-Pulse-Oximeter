@@ -17,6 +17,7 @@ var userSchema = new mongoose.Schema({
   history: Boolean,
   live: Boolean,
   tags: Boolean,
+  pruned: Boolean,
   profile: {
     name: { type: String, default: '' },
     gender: { type: String, default: '' },
