@@ -28,7 +28,7 @@ var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
 var adminController = require('./controllers/admin');
 var tagController = require('./controllers/tag');
-
+var prunedController = require('./controllers/pruned');
 
 /**
  * API keys and Passport configuration.
@@ -116,6 +116,12 @@ app.get('/tags', passportConf.isAuthenticated, homeController.tags);
 app.get('/pruned', passportConf.isAuthenticated, homeController.pruned);
 app.get('/pushdeviceadd/:deviceToken', homeController.addDevice)
 app.get('/pushnotification/:message', homeController.pushNotification)
+
+/*
+Pruned App routs
+*/
+app.get('/SPO2Data', passportConf.isAuthenticated, prunedController.SPO2Data);
+
 
 /*
 Admin App routs

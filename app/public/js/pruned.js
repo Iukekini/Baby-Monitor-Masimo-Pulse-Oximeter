@@ -4,13 +4,13 @@ $(document).ready(function () {
 
  dt_start = new Date(Date.UTC(2017, 2 - 1, 19, 0, 0, 0, 0));  //20170219
  ms_start=dt_start.getTime();
- ms_end=ms_start+ 1*60*60*1000 ;
+ ms_end=ms_start+ 8*60*60*1000 ;
 
 
 
 
 
-    $.getJSON('/historicalspo2data?start=' + Math.round(ms_start) +
+    $.getJSON('/SPO2data?start=' + Math.round(ms_start) +
         '&end=' + Math.round(ms_end), function (data) {
 
         $('#MAINGRAPHPRUNED').highcharts('StockChart', {
@@ -76,7 +76,7 @@ $(document).ready(function () {
                         text: 'All'
                     }
                 ],
-                selected: 1,
+                selected: 0,
                 inputEnabled: true
             },
 
