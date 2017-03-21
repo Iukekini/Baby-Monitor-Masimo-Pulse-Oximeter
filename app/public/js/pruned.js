@@ -1,12 +1,10 @@
+dt_start = new Date(Date.UTC(2017, 2 - 1, 19,19, 0, 0, 0));  //20170219 19:00:00
+ms_start=dt_start.getTime();
+ms_end=ms_start+ 17*60*60*1000 ;
+
 
 
 $(document).ready(function () {
-
- dt_start = new Date(Date.UTC(2017, 2 - 1, 19, 0, 0, 0, 0));  //20170219
- ms_start=dt_start.getTime();
- ms_end=ms_start+ 8*60*60*1000 ;
-
-
 
 
 
@@ -27,10 +25,7 @@ $(document).ready(function () {
                 }
             },
             navigator: {
-                adaptToUpdatedData: false,
-                series: {
-                    data: data.spo2
-                }
+                adaptToUpdatedData: true
             },
             scrollbar: {
                 liveRedraw: false
@@ -58,13 +53,13 @@ $(document).ready(function () {
                 buttons: [
                     {
                         type: 'hour',
-                        count: 6,
-                        text: '6H'
+                        count: 1,
+                        text: '1H'
                     },
                     {
                         type: 'hour',
-                        count: 12,
-                        text: '12H'
+                        count: 2,
+                        text: '2H'
                     },
                     {
                         type: 'day',
@@ -76,7 +71,7 @@ $(document).ready(function () {
                         text: 'All'
                     }
                 ],
-                selected: 0,
+                selected: 3,
                 inputEnabled: true
             },
 
@@ -129,3 +124,34 @@ $(document).ready(function () {
 
     });
 });
+
+
+function prev_day(){
+  ms_start=ms_start-24*60*60*1000;
+  ms_end=ms_end-24*60*60*1000;
+  load_day();
+  };
+function next_day(){
+  ms_start=ms_start+24*60*60*1000;
+  ms_end=ms_end+24*60*60*1000;
+  load_day();
+  };
+
+function load_day() {
+  var chart = $('#MAINGRAPHPRUNED').highcharts();
+    chart.showLoading('Loading data from server...');
+
+    $.getJSON('/SPO2data?start=' + Math.round(ms_start) +
+        '&end=' + Math.round(ms_end), function (data)  {
+            chart.series[0].setData(data.spo2);
+            chart.series[1].setData(data.spo2);
+            chart.series[2].setData(data.alarms);
+            chart.series[3].setData(data.bpm);
+            chart.series[4].setData(data.pi);
+
+
+            chart.hideLoading();
+            chart.rangeSelector.clickButton(3, true);
+
+        });
+}

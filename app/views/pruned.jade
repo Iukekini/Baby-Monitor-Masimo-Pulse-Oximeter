@@ -10,9 +10,10 @@ block content
     .col-md-12
       p.text-center
         small you can click on the legend names (O2, BPM, PI) at the bottom of the graph to turn on and off different results
-
-
-
+  .row
+  .col-md-12
+   a.btn.btn-primary(onclick='prev_day()') Prev. Day
+   a.btn.btn-primary(onclick='next_day()') Next Day
 
 block scripts
     script(src='https://code.highcharts.com/stock/highstock.js')

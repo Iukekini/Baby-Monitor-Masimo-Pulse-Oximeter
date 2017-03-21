@@ -393,7 +393,7 @@ function RenderData(docs, res) {
         //Sort the bpm Results.
         bpm = sortandnormalize(bpm, SkipOffset);
         //Sort the pi Results.
-        pi = sortandnormalize(pi, SkipOffset)
+        pi = sortandnormalize(pi, SkipOffset);
 
        //Sort the Alarms Results(no normalization )
         alarms = alarms.sort(timesort);
