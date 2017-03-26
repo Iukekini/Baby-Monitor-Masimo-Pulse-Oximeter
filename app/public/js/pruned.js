@@ -1,11 +1,4 @@
-dt_start = new Date(Date.UTC(2017, 2 - 1, 18,19, 0, 0, 0));  //20170218 19:00:00
-ms_start=dt_start.getTime();
-ms_end=ms_start+ 17*60*60*1000 ;
-
-
-
 $(document).ready(function () {
-
 
 
     $.getJSON('/SPO2data?start=' + Math.round(ms_start) +
@@ -146,17 +139,29 @@ $(document).ready(function () {
 
     });
 
+
 });
 
+function get_last_avail_day() {
+  // TODO call server to get the last avalaible day in the ddbb
+  dt_start = new Date(Date.UTC(2017, 2 - 1, 18,19, 0, 0, 0));  //20170218 19:00:00
+  ms_start=dt_start.getTime();
+  ms_end=ms_start+ 17*60*60*1000 ;
+  return {
+      start: ms_start,
+      end: ms_end
+  }
+};
+var ms = get_last_avail_day();
 
 function prev_day(){
-  ms_start=ms_start-24*60*60*1000;
-  ms_end=ms_end-24*60*60*1000;
+  ms.start=ms.start-24*60*60*1000;
+  ms.end=ms.end-24*60*60*1000;
   load_day();
   };
 function next_day(){
-  ms_start=ms_start+24*60*60*1000;
-  ms_end=ms_end+24*60*60*1000;
+  ms.start=ms.start+24*60*60*1000;
+  ms.end=ms.end+24*60*60*1000;
   load_day();
   };
 
@@ -164,8 +169,8 @@ function load_day() {
   var chart = $('#MAINGRAPHPRUNED').highcharts();
     chart.showLoading('Loading data from server...');
 
-    $.getJSON('/SPO2data?start=' + Math.round(ms_start) +
-        '&end=' + Math.round(ms_end), function (data)  {
+    $.getJSON('/SPO2data?start=' + Math.round(ms.start) +
+        '&end=' + Math.round(ms.end), function (data)  {
             chart.series[0].setData(data.spo2,false);
             chart.series[1].setData(data.spo2,false);
             chart.series[2].setData(data.alarms,false);
