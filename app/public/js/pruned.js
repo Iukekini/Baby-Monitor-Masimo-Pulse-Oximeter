@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
 
-    $.getJSON('/SPO2data?start=' + Math.round(ms_start) +
-        '&end=' + Math.round(ms_end), function (data) {
+    $.getJSON('/SPO2data?start=' + Math.round(ms.start) +
+        '&end=' + Math.round(ms.end), function (data) {
 
         $('#MAINGRAPHPRUNED').highcharts('StockChart', {
 
