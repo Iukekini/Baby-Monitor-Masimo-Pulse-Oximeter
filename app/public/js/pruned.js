@@ -24,11 +24,7 @@ $(document).ready(function () {
                 liveRedraw: false
             },
             title: {
-                text: 'Historical Oxygen Levels'
-            },
-            subtitle: {
-                text: document.ontouchstart === undefined ?
-                    'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+                text: 'Oxygen Levels'
             },
             xAxis: {
                 type: 'datetime'
@@ -36,6 +32,30 @@ $(document).ready(function () {
            //,  crosshair: false
 
             },
+
+
+            yAxis: [{
+                          labels: {
+                            align: 'right',
+                            x: -4
+                          },
+                          title: {
+                              text: 'SpO2 & bpm'
+                          }
+                      }, {
+                          labels: {
+                            align: 'left',
+                            x: 8
+                          },
+                          title: {
+                              text: 'P.I.'
+                          },
+                          top: '75%',
+                          height: '25%',
+                          offset: 0
+                      }
+
+                    ],
 
             legend: {
                 enabled: true
@@ -46,6 +66,7 @@ $(document).ready(function () {
                 },
                 columnrange: {
                     pointPadding: -0.25,
+                    minPointLength: 5,
                     dataGrouping: {
                         groupPixelWidth: 50
                     }
@@ -57,6 +78,7 @@ $(document).ready(function () {
 
             tooltip: {
                 valueDecimals: 2
+              //,  split: true
             },
             rangeSelector: {
                 buttons: [
@@ -124,16 +146,23 @@ $(document).ready(function () {
                     id: 'bpm',
                     data: data.bpm,
                     turboThreshold: 0,
+                    pointPlacement: "between",
                     visible: false
-                },
+                }
+                ,
                 {
                     type: 'spline',
+                    yAxis: 1,
                     name: 'PI',
                     id: 'pi',
                     data: data.pi,
                     turboThreshold: 0,
-                    visible: false
-                }]
+                    pointPlacement: "between",
+                    visible: false,
+                    negativeColor: '#FF0000' ,
+                    threshold: 1
+                }
+              ]
         });
 
 
