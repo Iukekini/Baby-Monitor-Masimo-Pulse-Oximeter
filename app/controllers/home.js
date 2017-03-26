@@ -172,7 +172,8 @@ exports.SPO2Count = function (req, res) {
                     }]
 
                 , function (err, docs) {
-
+                 if (err)  {console.trace(err) }
+                 else {
                     var total = 0;
                     var results = [];
                      //For each Document Return Added it to either the SPO2 Graph resutls or the Alarm Results.
@@ -188,6 +189,7 @@ exports.SPO2Count = function (req, res) {
                     });
                     results = results.sort(namesort);
                     res.send(results);
+                  }
                 });
     }
 }
@@ -244,7 +246,7 @@ exports.historicalSPO2Data = function (req, res) {
 
                 , function (err, docs) {
                     if (err) console.trace(err)
-                    RenderData(docs, res);
+                    else RenderData(docs, res);
                 });
         } else {
 
@@ -281,7 +283,7 @@ exports.historicalSPO2Data = function (req, res) {
 
                 , function (err, docs) {
                     if (err) console.trace(err)
-                    RenderData(docs, res);
+                    else RenderData(docs, res);
                 });
         }
     } else {
@@ -309,7 +311,7 @@ exports.historicalSPO2Data = function (req, res) {
 
             , function (err, docs) {
                 if (err) console.trace(err)
-                RenderData(docs, res);
+                else RenderData(docs, res);
             });
     }
 };

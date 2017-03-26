@@ -45,14 +45,21 @@ var app = express();
 /**
  * Connect to MongoDB.
  */
-mongoose.connect(secrets.db, {server:{auto_reconnect:true}});
+
+
+
+mongoose.connect(secrets.db, {server: { socketOptions: { connectTimeoutMS: 8000}},auto_reconnect:true });
+
+
+
 mongoose.connection.on('error', function() {
   console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
   mongoose.disconnect();
 });
 mongoose.connection.on('disconnected', function() {
     console.log('MongoDB disconnected!');
-    mongoose.connect(secrets.db, {server:{auto_reconnect:true}});
+    mongoose.connect(secrets.db, {server: { socketOptions: { connectTimeoutMS: 8000}},auto_reconnect:true});
+
 });
 
 /**

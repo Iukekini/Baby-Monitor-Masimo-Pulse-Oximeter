@@ -41,7 +41,7 @@ exports.SPO2Data = function (req, res) {
               .sort({ date: 1 })
         events.exec(function (err, docs) {
                if (err) console.trace(err)
-               RenderData(docs, res);
+               else RenderData(docs, res);
                 });
 
 
