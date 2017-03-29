@@ -40,6 +40,15 @@ exports.tags = function (req, res) {
         title: 'Tags'
     });
 };
+/**
+ * GET /pruned
+ * Adding pruned Page
+ */
+exports.pruned = function (req, res) {
+    res.render('pruned', {
+        title: 'Pruned'
+    });
+};
 
 
 /**
@@ -163,7 +172,8 @@ exports.SPO2Count = function (req, res) {
                     }]
 
                 , function (err, docs) {
-
+                 if (err)  {console.trace(err) }
+                 else {
                     var total = 0;
                     var results = [];
                      //For each Document Return Added it to either the SPO2 Graph resutls or the Alarm Results.
@@ -179,6 +189,7 @@ exports.SPO2Count = function (req, res) {
                     });
                     results = results.sort(namesort);
                     res.send(results);
+                  }
                 });
     }
 }
@@ -234,7 +245,8 @@ exports.historicalSPO2Data = function (req, res) {
                     }]
 
                 , function (err, docs) {
-                    RenderData(docs, res);
+                    if (err) console.trace(err)
+                    else RenderData(docs, res);
                 });
         } else {
 
@@ -270,7 +282,8 @@ exports.historicalSPO2Data = function (req, res) {
                     }]
 
                 , function (err, docs) {
-                    RenderData(docs, res);
+                    if (err) console.trace(err)
+                    else RenderData(docs, res);
                 });
         }
     } else {
@@ -297,7 +310,8 @@ exports.historicalSPO2Data = function (req, res) {
                 }]
 
             , function (err, docs) {
-                RenderData(docs, res);
+                if (err) console.trace(err)
+                else RenderData(docs, res);
             });
     }
 };
@@ -381,8 +395,10 @@ function RenderData(docs, res) {
         //Sort the bpm Results.
         bpm = sortandnormalize(bpm, SkipOffset);
         //Sort the pi Results.
-        pi = sortandnormalize(pi, SkipOffset)
+        pi = sortandnormalize(pi, SkipOffset);
 
+       //Sort the Alarms Results(no normalization )
+        alarms = alarms.sort(timesort);
 
         //Create json object to return.
         var graphData = { alarms: alarms, spo2: results, bpm: bpm, pi: pi };

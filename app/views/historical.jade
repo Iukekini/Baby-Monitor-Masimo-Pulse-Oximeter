@@ -2,7 +2,7 @@ extends layout
 
 block content
   p.lead Graphs
-  hr      
+  hr
   .row
     .col-sm-12
       #MAINGRAPH(style='min-width: 310px; height: 600px; margin: 0 auto')
@@ -10,11 +10,11 @@ block content
     .col-md-12
       p.text-center
         small you can click on the legend names (O2, BPM, PI) at the bottom of the graph to turn on and off different results
-  hr      
+  hr
   .row
     .col-sm-12
       #PIECHART(style='min-width: 310px; height: 600px; margin: 0 auto')
-          
+
 
   .modal.fade(tabindex='-1', role='dialog', id="progressmodel")
     .modal-dialog.modal-vertical-centered
@@ -27,5 +27,6 @@ block content
 block scripts
     script(src='https://code.highcharts.com/stock/highstock.js')
     script(src='https://code.highcharts.com/stock/highcharts-more.js')
+    script(src='https://code.highcharts.com/modules/no-data-to-display.js')
     script(src='/js/theme.js')
     script(src='/js/historical.js')

@@ -14,6 +14,7 @@ block content
                 th History
                 th Live
                 th Tags
+                th Pruned
         tbody
             each val in users
                 tr
@@ -30,6 +31,8 @@ block content
                         input(type='checkbox',name='live', checked=val.live onchange='updateRights("#{val.id}", "live",  this.checked);' )
                     td
                         input(type='checkbox',name='tags', checked=val.live onchange='updateRights("#{val.id}", "tags",  this.checked);' )
+                    td
+                        input(type='checkbox',name='pruned', checked=val.live onchange='updateRights("#{val.id}", "pruned",  this.checked);' )
 
 
 block scripts

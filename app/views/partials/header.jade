@@ -23,6 +23,9 @@
             if user.tags
                 li(class=title=='Tags'?'active':undefined)
                     a(href='/tags') Tags
+            if user.pruned
+                li(class=title=='Pruned'?'active':undefined)
+                    a(href='/pruned') Pruned
             if user.admin
                 li(class=title=='Admin'?'active':undefined)
                     a(href='/admin') Admin

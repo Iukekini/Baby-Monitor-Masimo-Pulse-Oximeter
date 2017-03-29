@@ -28,6 +28,7 @@ var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
 var adminController = require('./controllers/admin');
 var tagController = require('./controllers/tag');
+var prunedController = require('./controllers/pruned');
 
 /**
  * API keys and Passport configuration.
@@ -44,10 +45,21 @@ var app = express();
 /**
  * Connect to MongoDB.
  */
-mongoose.connect(secrets.db);
+
+
+
+mongoose.connect(secrets.db, {server: { socketOptions: { connectTimeoutMS: 8000}},auto_reconnect:true });
+
+
+
 mongoose.connection.on('error', function() {
   console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
-  process.exit(1);
+  mongoose.disconnect();
+});
+mongoose.connection.on('disconnected', function() {
+    console.log('MongoDB disconnected!');
+    mongoose.connect(secrets.db, {server: { socketOptions: { connectTimeoutMS: 8000}},auto_reconnect:true});
+
 });
 
 /**
@@ -112,8 +124,15 @@ app.get('/SPO2Count', passportConf.isAuthenticated, homeController.SPO2Count);
 app.get('/status', passportConf.isAuthenticated, homeController.status);
 app.get('/historical', passportConf.isAuthenticated, homeController.historical);
 app.get('/tags', passportConf.isAuthenticated, homeController.tags);
+app.get('/pruned', passportConf.isAuthenticated, homeController.pruned);
 app.get('/pushdeviceadd/:deviceToken', homeController.addDevice)
 app.get('/pushnotification/:message', homeController.pushNotification)
+
+/*
+Pruned App routs
+*/
+app.get('/SPO2Data', passportConf.isAuthenticated, prunedController.SPO2Data);
+
 
 /*
 Admin App routs
